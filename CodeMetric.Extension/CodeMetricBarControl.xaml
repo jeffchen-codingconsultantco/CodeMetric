@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="CodeMetric.Extension.CodeMetricBarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CodeMetric.Extension"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="120">
+    <Border Background="#FF1B5277" BorderBrush="Black" BorderThickness="1" CornerRadius="3">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" Name="RowMetricContainer" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" Name="ColLineOfCode"></ColumnDefinition>
+                <ColumnDefinition Width="*" Name="ColMaintainabilityIndex"></ColumnDefinition>
+                <ColumnDefinition Width="*" Name="ColCyclomaticComplexity"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Name="LblLineOfCode" Content="0" 
+                   Grid.Column="0" Padding="0" Height="28" FontSize="20"
+                   HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
+                   Foreground="#FFDFDFDF" />
+
+            <Label Name="LblMaintainabilityIndex" Content="0" 
+                   Grid.Column="1" Padding="0" Height="28" FontSize="20"
+                   HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
+                   Foreground="#FFDFDFDF" />
+
+            <Label Name="LblCyclomaticComplexity" Content="0" 
+                   Grid.Column="2" Padding="0" Height="28" FontSize="20"
+                   HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
+                   Foreground="#FFDFDFDF" />
+            
+        </Grid>
+    </Border>
+</UserControl>
