@@ -18,17 +18,17 @@
                 <ColumnDefinition Width="*" Name="ColCyclomaticComplexity"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Label Name="LblLineOfCode" Content="0" 
+            <Label Name="LblLineOfCode" Content="999" 
                    Grid.Column="0" Padding="0" Height="28" FontSize="20"
                    HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
                    Foreground="#FFDFDFDF" />
 
-            <Label Name="LblMaintainabilityIndex" Content="0" 
+            <Label Name="LblMaintainabilityIndex" Content="999" 
                    Grid.Column="1" Padding="0" Height="28" FontSize="20"
                    HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
                    Foreground="#FFDFDFDF" />
 
-            <Label Name="LblCyclomaticComplexity" Content="0" 
+            <Label Name="LblCyclomaticComplexity" Content="999" 
                    Grid.Column="2" Padding="0" Height="28" FontSize="20"
                    HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
                    Foreground="#FFDFDFDF" />
