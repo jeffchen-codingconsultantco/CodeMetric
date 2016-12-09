@@ -29,10 +29,20 @@ namespace CodeMetric.Extension
         {
             _adornmentLayer.RemoveAdornment(_root);
 
-            Canvas.SetLeft(_root, _view.ViewportRight - 80);
-            Canvas.SetTop(_root, _view.ViewportTop + 15);
+            Canvas.SetLeft(_root, _view.ViewportLeft + 300);
+            Canvas.SetTop(_root, _view.ViewportTop + 30);
 
             _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, _root, null);
+        }
+
+        public void UpdateMetric()
+        {
+            var ran = new Random();
+
+            _root.LblLineOfCode.Content = ran.Next(200, 300);
+            _root.LblCyclomaticComplexity.Content = ran.Next(100, 200);
+            _root.LblMaintainabilityIndex.Content = ran.Next(1, 100);
+
         }
     }
 }
