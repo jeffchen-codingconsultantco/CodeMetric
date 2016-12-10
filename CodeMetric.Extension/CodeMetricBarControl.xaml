@@ -20,21 +20,21 @@
                 <ColumnDefinition Width="40" Name="ColCyclomaticComplexity"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Label Name="LblLineOfCode" Content="999" Width="40" Height="30"
+            <Label Name="LblLineOfCode" Content="999" Width="40"
                    Grid.Column="0" Padding="0" FontSize="20" 
                    HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
                    Foreground="#FFDFDFDF" />
 
             <Border Grid.Column="1" BorderThickness="1" BorderBrush="SteelBlue"></Border>
 
-            <Label Name="LblMaintainabilityIndex" Content="999" Width="40" Height="30"
+            <Label Name="LblMaintainabilityIndex" Content="999" Width="40"
                    Grid.Column="2" Padding="0" FontSize="20"
                    HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
                    Foreground="#FFDFDFDF" />
 
             <Border Grid.Column="3" BorderThickness="1" BorderBrush="SteelBlue"></Border>
 
-            <Label Name="LblCyclomaticComplexity" Content="999" Width="40" Height="30"
+            <Label Name="LblCyclomaticComplexity" Content="999" Width="40"
                    Grid.Column="4" Padding="0" FontSize="20"
                    HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
                    Foreground="#FFDFDFDF" />
