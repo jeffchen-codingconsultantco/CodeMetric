@@ -153,12 +153,6 @@ namespace CodeMetric.Core
             _counter++;
         }
 
-        public override void VisitUsingDirective(UsingDirectiveSyntax node)
-        {
-            base.VisitUsingDirective(node);
-            _counter++;
-        }
-
         public override void VisitUsingStatement(UsingStatementSyntax node)
         {
             base.VisitUsingStatement(node);

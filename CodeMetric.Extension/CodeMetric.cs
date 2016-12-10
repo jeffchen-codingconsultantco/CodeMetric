@@ -44,10 +44,7 @@ namespace CodeMetric.Extension
 
             var codeStr = _view.TextSnapshot.GetText();
             var syntaxTree = CSharpSyntaxTree.ParseText(codeStr);
-            var root = syntaxTree
-                    .GetRoot()
-                    .DescendantNodes()
-                    .First(c => c.IsKind(SyntaxKind.MethodDeclaration));
+            var root = syntaxTree.GetRoot();
 
             var locCalculator = new LineOfCodeCalculator();
             var loc = locCalculator.Calculate(root);
