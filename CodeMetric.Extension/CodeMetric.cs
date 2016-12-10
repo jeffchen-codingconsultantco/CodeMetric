@@ -44,23 +44,12 @@ namespace CodeMetric.Extension
         public void UpdateMetric()
         {
             var ran = new Random();
-
-            /*
-Microsoft.VisualStudio.Text.Editor.IWpfTextView textView = GetTextView();
-Microsoft.VisualStudio.Text.SnapshotPoint caretPosition = textView.Caret.Position.BufferPosition;
-Microsoft.CodeAnalysis.Document document = caretPosition.Snapshot.GetOpenDocumentInCurrentContextWithChanges();
-Microsoft.CodeAnalysis.CSharp.Syntax.InvocationExpressionSyntax invocationExpressionNode = 
-document.GetSyntaxRootAsync().Result.FindToken(caretPosition).Parent.AncestorsAndSelf().OfType<Microsoft.CodeAnalysis.CSharp.Syntax.InvocationExpressionSyntax>().FirstOrDefault();
-             */
-
+            
             SnapshotPoint caretPosition = _view.Caret.Position.BufferPosition;
             Document doc = caretPosition.Snapshot.GetOpenDocumentInCurrentContextWithChanges();
             var ancestorsAndSelf = doc.GetSyntaxRootAsync().Result.FindToken(caretPosition).Parent.AncestorsAndSelf();
             var root = ancestorsAndSelf.FirstOrDefault(i => i is MethodDeclarationSyntax);
 
-            //var codeStr = _view.TextSnapshot.GetText();
-            //var syntaxTree = CSharpSyntaxTree.ParseText(codeStr);
-            //var root = syntaxTree.GetRoot();
             if(root != null)
             {
                 //LOC

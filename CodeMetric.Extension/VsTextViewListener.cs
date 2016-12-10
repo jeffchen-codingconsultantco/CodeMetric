@@ -28,7 +28,7 @@ namespace CodeMetric.Extension
             if(textView == null)
                 return;
 
-            var adornment = textView.Properties.GetProperty<CodeMetric>(typeof(CodeMetric));
+            CodeMetric adornment = textView.Properties.GetProperty<CodeMetric>(typeof(CodeMetric));
             textView.Properties.GetOrCreateSingletonProperty(() => new TypeCharFilter(textViewAdapter, textView, adornment));
         }
     }
@@ -37,15 +37,14 @@ namespace CodeMetric.Extension
     internal sealed class TypeCharFilter : IOleCommandTarget
     {
         private ITextView _textView;
-        private CodeMetric _codeMetric;
+        private readonly CodeMetric _adornmentCodeMetric;
+        private readonly IOleCommandTarget _nextCommandHandler;
 
-        IOleCommandTarget _nextCommandHandler;
 
-
-        public TypeCharFilter(IVsTextView textViewAdapter, ITextView textView, CodeMetric codeMetric)
+        public TypeCharFilter(IVsTextView textViewAdapter, ITextView textView, CodeMetric adornment)
         {
             this._textView = textView;
-            this._codeMetric = codeMetric;
+            this._adornmentCodeMetric = adornment;
 
             textViewAdapter.AddCommandFilter(this, out _nextCommandHandler);
 
@@ -54,7 +53,7 @@ namespace CodeMetric.Extension
         public int Exec(ref Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
         {
             int hr = VSConstants.S_OK;
-            _codeMetric.UpdateMetric();
+            _adornmentCodeMetric.UpdateMetric();
 
             hr = _nextCommandHandler.Exec(ref pguidCmdGroup, nCmdID, nCmdexecopt, pvaIn, pvaOut);
 
