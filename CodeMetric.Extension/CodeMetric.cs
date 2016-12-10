@@ -53,22 +53,32 @@ Microsoft.CodeAnalysis.CSharp.Syntax.InvocationExpressionSyntax invocationExpres
 document.GetSyntaxRootAsync().Result.FindToken(caretPosition).Parent.AncestorsAndSelf().OfType<Microsoft.CodeAnalysis.CSharp.Syntax.InvocationExpressionSyntax>().FirstOrDefault();
              */
 
-            //SnapshotPoint caretPosition = _view.Caret.Position.BufferPosition;
-            //Document doc = caretPosition.Snapshot.GetOpenDocumentInCurrentContextWithChanges();
-            //InvocationExpressionSyntax invocationExpressionNode = doc.GetSyntaxRootAsync().Result.FindToken(caretPosition).Parent.AncestorsAndSelf().OfType<InvocationExpressionSyntax>().FirstOrDefault();
-            
-            var codeStr = _view.TextSnapshot.GetText();
-            var syntaxTree = CSharpSyntaxTree.ParseText(codeStr);
-            
-            var root = syntaxTree.GetRoot();
-            
-            var locCalculator = new LineOfCodeCalculator();
-            var loc = locCalculator.Calculate(root);
-            _root.LblLineOfCode.Content = loc;
+            SnapshotPoint caretPosition = _view.Caret.Position.BufferPosition;
+            Document doc = caretPosition.Snapshot.GetOpenDocumentInCurrentContextWithChanges();
+            var ancestorsAndSelf = doc.GetSyntaxRootAsync().Result.FindToken(caretPosition).Parent.AncestorsAndSelf();
+            var root = ancestorsAndSelf.FirstOrDefault(i => i is MethodDeclarationSyntax);
 
-            _root.LblCyclomaticComplexity.Content = ran.Next(100, 200);
-            _root.LblMaintainabilityIndex.Content = ran.Next(1, 100);
+            //var codeStr = _view.TextSnapshot.GetText();
+            //var syntaxTree = CSharpSyntaxTree.ParseText(codeStr);
+            //var root = syntaxTree.GetRoot();
+            if(root != null)
+            {
+                //LOC
+                var locCalculator = new LineOfCodeCalculator();
+                var loc = locCalculator.Calculate(root);
+                _root.LblLineOfCode.Content = loc;
 
+
+                _root.LblCyclomaticComplexity.Content = ran.Next(100, 200);
+                _root.LblMaintainabilityIndex.Content = ran.Next(1, 100);
+            }
+            else
+            {
+                //Reset
+                _root.LblLineOfCode.Content = 0;
+                _root.LblCyclomaticComplexity.Content = 0;
+                _root.LblMaintainabilityIndex.Content = 0;
+            }
         }
     }
 }

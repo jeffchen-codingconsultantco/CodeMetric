@@ -20,6 +20,7 @@ namespace CodeMetric.Extension
     {
         [Import]
         internal IVsEditorAdaptersFactoryService AdapterService = null;
+        
 
         public void VsTextViewCreated(IVsTextView textViewAdapter)
         {
@@ -53,8 +54,6 @@ namespace CodeMetric.Extension
         public int Exec(ref Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
         {
             int hr = VSConstants.S_OK;
-
-
             _codeMetric.UpdateMetric();
 
             hr = _nextCommandHandler.Exec(ref pguidCmdGroup, nCmdID, nCmdexecopt, pvaIn, pvaOut);
