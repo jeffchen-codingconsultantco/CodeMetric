@@ -11,6 +11,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
+using Microsoft.VisualStudio.Text.Formatting;
 
 namespace CodeMetric.Extension
 {
@@ -52,6 +53,12 @@ namespace CodeMetric.Extension
 
             if(root != null)
             {
+                var charBounds = _view.GetTextViewLineContainingBufferPosition(caretPosition)
+                                      .GetCharacterBounds(caretPosition);
+                
+                Canvas.SetTop(_root, charBounds.Top);
+                Canvas.SetRight(_root, charBounds.Right + 30);
+                
                 //LOC
                 var locCalculator = new LineOfCodeCalculator();
                 var loc = locCalculator.Calculate(root);
