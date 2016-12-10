@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using CodeMetric.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text.Editor;
 
 namespace CodeMetric.Extension
@@ -44,8 +45,9 @@ namespace CodeMetric.Extension
 
             var codeStr = _view.TextSnapshot.GetText();
             var syntaxTree = CSharpSyntaxTree.ParseText(codeStr);
+            
             var root = syntaxTree.GetRoot();
-
+            
             var locCalculator = new LineOfCodeCalculator();
             var loc = locCalculator.Calculate(root);
             _root.LblLineOfCode.Content = loc;
