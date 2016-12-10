@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using CodeMetric.Core;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.VisualStudio.Text.Editor;
 
 namespace CodeMetric.Extension
@@ -39,7 +42,18 @@ namespace CodeMetric.Extension
         {
             var ran = new Random();
 
-            _root.LblLineOfCode.Content = ran.Next(200, 300);
+            var codeStr = _view.TextSnapshot.GetText();
+            var syntaxTree = CSharpSyntaxTree.ParseText(codeStr);
+            var root = syntaxTree
+                    .GetRoot()
+                    .DescendantNodes()
+                    .First(c => c.IsKind(SyntaxKind.MethodDeclaration));
+
+            var locCalculator = new LineOfCodeCalculator();
+            var loc = locCalculator.Calculate(root);
+            _root.LblLineOfCode.Content = loc;
+
+
             _root.LblCyclomaticComplexity.Content = ran.Next(100, 200);
             _root.LblMaintainabilityIndex.Content = ran.Next(1, 100);
 
