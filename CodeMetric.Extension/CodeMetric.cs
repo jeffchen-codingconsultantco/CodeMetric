@@ -7,7 +7,9 @@ using System.Windows.Controls;
 using CodeMetric.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 
 namespace CodeMetric.Extension
@@ -43,6 +45,18 @@ namespace CodeMetric.Extension
         {
             var ran = new Random();
 
+            /*
+Microsoft.VisualStudio.Text.Editor.IWpfTextView textView = GetTextView();
+Microsoft.VisualStudio.Text.SnapshotPoint caretPosition = textView.Caret.Position.BufferPosition;
+Microsoft.CodeAnalysis.Document document = caretPosition.Snapshot.GetOpenDocumentInCurrentContextWithChanges();
+Microsoft.CodeAnalysis.CSharp.Syntax.InvocationExpressionSyntax invocationExpressionNode = 
+document.GetSyntaxRootAsync().Result.FindToken(caretPosition).Parent.AncestorsAndSelf().OfType<Microsoft.CodeAnalysis.CSharp.Syntax.InvocationExpressionSyntax>().FirstOrDefault();
+             */
+
+            //SnapshotPoint caretPosition = _view.Caret.Position.BufferPosition;
+            //Document doc = caretPosition.Snapshot.GetOpenDocumentInCurrentContextWithChanges();
+            //InvocationExpressionSyntax invocationExpressionNode = doc.GetSyntaxRootAsync().Result.FindToken(caretPosition).Parent.AncestorsAndSelf().OfType<InvocationExpressionSyntax>().FirstOrDefault();
+            
             var codeStr = _view.TextSnapshot.GetText();
             var syntaxTree = CSharpSyntaxTree.ParseText(codeStr);
             
@@ -51,7 +65,6 @@ namespace CodeMetric.Extension
             var locCalculator = new LineOfCodeCalculator();
             var loc = locCalculator.Calculate(root);
             _root.LblLineOfCode.Content = loc;
-
 
             _root.LblCyclomaticComplexity.Content = ran.Next(100, 200);
             _root.LblMaintainabilityIndex.Content = ran.Next(1, 100);
