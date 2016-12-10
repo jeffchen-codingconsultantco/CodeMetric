@@ -5,34 +5,40 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CodeMetric.Extension"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="120">
-    <Border Background="#FF1B5277" BorderBrush="Black" BorderThickness="1" CornerRadius="3">
+             d:DesignHeight="30" d:DesignWidth="124" >
+    <Border Background="#FF1B5277" BorderThickness="1" CornerRadius="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" Name="RowMetricContainer" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" Name="ColLineOfCode"></ColumnDefinition>
-                <ColumnDefinition Width="*" Name="ColMaintainabilityIndex"></ColumnDefinition>
-                <ColumnDefinition Width="*" Name="ColCyclomaticComplexity"></ColumnDefinition>
+                <ColumnDefinition Width="40" Name="ColLineOfCode"></ColumnDefinition>
+                <ColumnDefinition Width="1" ></ColumnDefinition>
+                <ColumnDefinition Width="40" Name="ColMaintainabilityIndex"></ColumnDefinition>
+                <ColumnDefinition Width="1" ></ColumnDefinition>
+                <ColumnDefinition Width="40" Name="ColCyclomaticComplexity"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Label Name="LblLineOfCode" Content="999" 
-                   Grid.Column="0" Padding="0" Height="28" FontSize="20"
+            <Label Name="LblLineOfCode" Content="999" Width="40" Height="30"
+                   Grid.Column="0" Padding="0" FontSize="20" 
                    HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
                    Foreground="#FFDFDFDF" />
 
-            <Label Name="LblMaintainabilityIndex" Content="999" 
-                   Grid.Column="1" Padding="0" Height="28" FontSize="20"
+            <Border Grid.Column="1" BorderThickness="1" BorderBrush="SteelBlue"></Border>
+
+            <Label Name="LblMaintainabilityIndex" Content="999" Width="40" Height="30"
+                   Grid.Column="2" Padding="0" FontSize="20"
                    HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
                    Foreground="#FFDFDFDF" />
 
-            <Label Name="LblCyclomaticComplexity" Content="999" 
-                   Grid.Column="2" Padding="0" Height="28" FontSize="20"
+            <Border Grid.Column="3" BorderThickness="1" BorderBrush="SteelBlue"></Border>
+
+            <Label Name="LblCyclomaticComplexity" Content="999" Width="40" Height="30"
+                   Grid.Column="4" Padding="0" FontSize="20"
                    HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
                    Foreground="#FFDFDFDF" />
-            
+
         </Grid>
     </Border>
 </UserControl>
