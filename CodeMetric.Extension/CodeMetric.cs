@@ -17,9 +17,9 @@ namespace CodeMetric.Extension
 {
     class CodeMetric
     {
-        private CodeMetricBarControl _root;
-        private IWpfTextView _view;
-        private IAdornmentLayer _adornmentLayer;
+        private readonly CodeMetricBarControl _root;
+        private readonly IWpfTextView _view;
+        private readonly IAdornmentLayer _adornmentLayer;
         
         public CodeMetric(IWpfTextView view)
         {
