@@ -57,8 +57,8 @@ namespace CodeMetric.Extension
                 var charBounds = _view.GetTextViewLineContainingBufferPosition(caretPosition)
                                       .GetCharacterBounds(caretPosition);
                 
-                Canvas.SetTop(_root, charBounds.Top);
-                Canvas.SetRight(_root, charBounds.Right + 30);
+                Canvas.SetTop(_root, charBounds.Bottom);
+                Canvas.SetRight(_root, charBounds.Right + 100);
 
                 //LineOfCode
                 var locCalculator = new LineOfCodeCalculator();
