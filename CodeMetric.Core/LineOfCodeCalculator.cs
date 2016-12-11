@@ -19,7 +19,7 @@ namespace CodeMetric.Core
             
         }
 
-        public int Calculate(SyntaxNode node)
+        public double Calculate(SyntaxNode node)
         {
             if(node != null)
             {
@@ -28,6 +28,8 @@ namespace CodeMetric.Core
 
             return _counter;
         }
+
+        
 
         public override void VisitCheckedStatement(CheckedStatementSyntax node)
         {

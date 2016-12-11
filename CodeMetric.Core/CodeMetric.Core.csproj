@@ -154,7 +154,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CyclomaticComplexityCalculator.cs" />
+    <Compile Include="Halstead\HalsteadAnalyzer.cs" />
+    <Compile Include="Halstead\HalsteadMetrics.cs" />
+    <Compile Include="Halstead\IHalsteadMetrics.cs" />
     <Compile Include="LineOfCodeCalculator.cs" />
+    <Compile Include="MaintainabilityIndexCalculator.cs" />
+    <Compile Include="Halstead\Operands.cs" />
+    <Compile Include="Halstead\Operators.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

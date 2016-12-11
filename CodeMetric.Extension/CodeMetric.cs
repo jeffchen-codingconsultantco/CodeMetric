@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using CodeMetric.Core;
+using CodeMetric.Core.Halstead;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -20,8 +21,6 @@ namespace CodeMetric.Extension
         private readonly CodeMetricBarControl _root;
         private readonly IWpfTextView _view;
         private readonly IAdornmentLayer _adornmentLayer;
-        private readonly LineOfCodeCalculator _locCalculator;
-
 
         public CodeMetric(IWpfTextView view)
         {
@@ -29,9 +28,7 @@ namespace CodeMetric.Extension
             _root = new CodeMetricBarControl();
 
             _adornmentLayer = view.GetAdornmentLayer("CodeMetric");
-
-            _locCalculator = new LineOfCodeCalculator();
-
+            
             _view.ViewportHeightChanged += OnViewSizeChanged;
             _view.ViewportWidthChanged += OnViewSizeChanged;
         }
@@ -53,9 +50,9 @@ namespace CodeMetric.Extension
             SnapshotPoint caretPosition = _view.Caret.Position.BufferPosition;
             Document doc = caretPosition.Snapshot.GetOpenDocumentInCurrentContextWithChanges();
             var ancestorsAndSelf = doc.GetSyntaxRootAsync().Result.FindToken(caretPosition).Parent.AncestorsAndSelf();
-            var root = ancestorsAndSelf.FirstOrDefault(i => i is MethodDeclarationSyntax);
-
-            if(root != null)
+            SyntaxNode targetNode = ancestorsAndSelf.FirstOrDefault(i => i is MethodDeclarationSyntax);
+            
+            if(targetNode != null)
             {
                 var charBounds = _view.GetTextViewLineContainingBufferPosition(caretPosition)
                                       .GetCharacterBounds(caretPosition);
@@ -63,12 +60,21 @@ namespace CodeMetric.Extension
                 Canvas.SetTop(_root, charBounds.Top);
                 Canvas.SetRight(_root, charBounds.Right + 30);
 
-                //LOC
-                _root.LblLineOfCode.Content = _locCalculator.Calculate(root);
+                //LineOfCode
+                var locCalculator = new LineOfCodeCalculator();
+                var loc = locCalculator.Calculate(targetNode);
+                _root.LblLineOfCode.Content = loc;
 
+                //CyclomaticComplexity
+                var cyclomaticCalculaotr = new CyclomaticComplexityCalculator();
+                var cyclomaticCounter = cyclomaticCalculaotr.Calculate(targetNode);
+                _root.LblCyclomaticComplexity.Content = cyclomaticCounter;
 
-                _root.LblCyclomaticComplexity.Content = ran.Next(100, 200);
-                _root.LblMaintainabilityIndex.Content = ran.Next(1, 100);
+                //MaintainabilityIndex
+                var halsteadAnalyzer = new HalsteadAnalyzer();
+                var halsteadMetrics = halsteadAnalyzer.Calculate(targetNode);
+                var mi = MaintainabilityIndexCalculator.CalculateMaintainablityIndex(cyclomaticCounter, loc, halsteadMetrics);
+                _root.LblMaintainabilityIndex.Content = mi.ToString("###");
             }
             else
             {
