@@ -20,13 +20,17 @@ namespace CodeMetric.Extension
         private readonly CodeMetricBarControl _root;
         private readonly IWpfTextView _view;
         private readonly IAdornmentLayer _adornmentLayer;
-        
+        private readonly LineOfCodeCalculator _locCalculator;
+
+
         public CodeMetric(IWpfTextView view)
         {
             _view = view;
             _root = new CodeMetricBarControl();
 
             _adornmentLayer = view.GetAdornmentLayer("CodeMetric");
+
+            _locCalculator = new LineOfCodeCalculator();
 
             _view.ViewportHeightChanged += OnViewSizeChanged;
             _view.ViewportWidthChanged += OnViewSizeChanged;
@@ -58,11 +62,9 @@ namespace CodeMetric.Extension
                 
                 Canvas.SetTop(_root, charBounds.Top);
                 Canvas.SetRight(_root, charBounds.Right + 30);
-                
+
                 //LOC
-                var locCalculator = new LineOfCodeCalculator();
-                var loc = locCalculator.Calculate(root);
-                _root.LblLineOfCode.Content = loc;
+                _root.LblLineOfCode.Content = _locCalculator.Calculate(root);
 
 
                 _root.LblCyclomaticComplexity.Content = ran.Next(100, 200);
