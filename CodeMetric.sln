@@ -7,6 +7,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMetric.Extension", "Cod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMetric.Core", "CodeMetric.Core\CodeMetric.Core.csproj", "{488C2FBB-5527-4631-9125-C07021596D74}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reference", "Reference", "{0B341276-FF05-4A3D-B5A3-9232230D5224}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v14", "v14", "{FF38AB00-CE6B-4159-B910-135251D1B2BD}"
+	ProjectSection(SolutionItems) = preProject
+		References\v14\Microsoft.Alm.Shared.dll = References\v14\Microsoft.Alm.Shared.dll
+		References\v14\Microsoft.TeamFoundation.CodeSense.Client.Common.dll = References\v14\Microsoft.TeamFoundation.CodeSense.Client.Common.dll
+		References\v14\Microsoft.VisualStudio.Alm.Shared.CodeAnalysisClient.dll = References\v14\Microsoft.VisualStudio.Alm.Shared.CodeAnalysisClient.dll
+		References\v14\Microsoft.VisualStudio.Alm.Shared.dll = References\v14\Microsoft.VisualStudio.Alm.Shared.dll
+		References\v14\Microsoft.VisualStudio.CodeSense.Client.Common.dll = References\v14\Microsoft.VisualStudio.CodeSense.Client.Common.dll
+		References\v14\Microsoft.VisualStudio.CodeSense.dll = References\v14\Microsoft.VisualStudio.CodeSense.dll
+		References\v14\Microsoft.VisualStudio.CodeSense.Roslyn.dll = References\v14\Microsoft.VisualStudio.CodeSense.Roslyn.dll
+		References\v14\Microsoft.VisualStudio.Text.Internal.dll = References\v14\Microsoft.VisualStudio.Text.Internal.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +38,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FF38AB00-CE6B-4159-B910-135251D1B2BD} = {0B341276-FF05-4A3D-B5A3-9232230D5224}
 	EndGlobalSection
 EndGlobal

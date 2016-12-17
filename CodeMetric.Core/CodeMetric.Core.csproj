@@ -163,6 +163,7 @@
     <Compile Include="Halstead\Operands.cs" />
     <Compile Include="Halstead\Operators.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\IntArrayEqualtyComparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
