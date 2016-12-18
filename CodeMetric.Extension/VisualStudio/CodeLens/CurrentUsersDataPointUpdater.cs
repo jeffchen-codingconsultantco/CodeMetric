@@ -13,49 +13,49 @@ namespace TeamCoding.VisualStudio.CodeLens
     public class CurrentUsersDataPointUpdater : IDisposable
     {
         // Can't use an import here since this is loaded dynamically it doesn't have access to the main project's MEF exports
-        private readonly ILayoutChangeProvider LayoutChangeProvider = CodeMetricTypeProvider.Get<ILayoutChangeProvider>();
-        private readonly List<CurrentUsersDataPointViewModel> DataPointModels = new List<CurrentUsersDataPointViewModel>();
+        private readonly ILayoutChangeProvider _layoutChangeProvider = CodeMetricTypeProvider.Get<ILayoutChangeProvider>();
+        private readonly List<CurrentUsersDataPointViewModel> _dataPointModels = new List<CurrentUsersDataPointViewModel>();
 
-        private Dictionary<ICodeElementDescriptor, string> CodeElementDescriptorToDataPointString = new Dictionary<ICodeElementDescriptor, string>();
+        private readonly Dictionary<ICodeElementDescriptor, string> _codeElementDescriptorToDataPointString = new Dictionary<ICodeElementDescriptor, string>();
         private bool disposedValue = false; // To detect redundant calls
         public CurrentUsersDataPointUpdater()
         {
-            LayoutChangeProvider.LayoutChanged += LayoutChangeProviderOnLayoutChanged;
+            _layoutChangeProvider.LayoutChanged += LayoutChangeProviderOnLayoutChanged;
         }
 
         public void AddDataPointModel(CurrentUsersDataPointViewModel dataPointModel)
         {
-            DataPointModels.Add(dataPointModel);
+            _dataPointModels.Add(dataPointModel);
         }
 
         public void RemoveDataPointModel(CurrentUsersDataPointViewModel dataPointModel)
         {
-            DataPointModels.Remove(dataPointModel);
+            _dataPointModels.Remove(dataPointModel);
         }
 
         public Task<string> GetTextForDataPoint(ICodeElementDescriptor codeElementDescriptor)
         {
-            if(CodeElementDescriptorToDataPointString.ContainsKey(codeElementDescriptor))
+            if(_codeElementDescriptorToDataPointString.ContainsKey(codeElementDescriptor))
             {
-                return Task.FromResult(CodeElementDescriptorToDataPointString[codeElementDescriptor]);
+                return Task.FromResult(_codeElementDescriptorToDataPointString[codeElementDescriptor]);
             }
 
             var cmc = new CodeMetricCalculator();
             var result = cmc.Calculate(codeElementDescriptor.SyntaxNode);
 
             var metricMsg = $"LOC: {result.LineOfCode}, CC: {result.CyclomaticComplexity}, MI: {result.MaintainabilityIndex:###}";
-            CodeElementDescriptorToDataPointString.Add(codeElementDescriptor, metricMsg);
+            _codeElementDescriptorToDataPointString.Add(codeElementDescriptor, metricMsg);
             return Task.FromResult(metricMsg);
         }
 
         private void LayoutChangeProviderOnLayoutChanged(object sender, EventArgs eventArgs)
         {
-            foreach(var dataPointModel in DataPointModels)
+            foreach(var dataPointModel in _dataPointModels)
             {
                 var codeElementDescriptor = ((CurrentUsersDataPoint)dataPointModel.DataPoint).CodeElementDescriptor;
                 if(dataPointModel.IsDisposed)
                 {
-                    CodeElementDescriptorToDataPointString.Remove(codeElementDescriptor);
+                    _codeElementDescriptorToDataPointString.Remove(codeElementDescriptor);
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace TeamCoding.VisualStudio.CodeLens
 
                     if(shouldRefresh && dataPointModel.RefreshCommand.CanExecute(null))
                     {
-                        CodeElementDescriptorToDataPointString[codeElementDescriptor] = newText;
+                        _codeElementDescriptorToDataPointString[codeElementDescriptor] = newText;
                         dataPointModel.RefreshCommand.Execute(null);
                     }
                 }
@@ -86,7 +86,7 @@ namespace TeamCoding.VisualStudio.CodeLens
             {
                 if(disposing)
                 {
-                    LayoutChangeProvider.LayoutChanged -= LayoutChangeProviderOnLayoutChanged;
+                    _layoutChangeProvider.LayoutChanged -= LayoutChangeProviderOnLayoutChanged;
                 }
                 disposedValue = true;
             }
