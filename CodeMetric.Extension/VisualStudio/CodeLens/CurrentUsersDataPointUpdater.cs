@@ -18,9 +18,34 @@ namespace TeamCoding.VisualStudio.CodeLens
 
         private Dictionary<ICodeElementDescriptor, string> CodeElementDescriptorToDataPointString = new Dictionary<ICodeElementDescriptor, string>();
         private bool disposedValue = false; // To detect redundant calls
-        public CurrentUsersDataPointUpdater(): base()
+        public CurrentUsersDataPointUpdater()
         {
             LayoutChangeProvider.LayoutChanged += LayoutChangeProviderOnLayoutChanged;
+        }
+
+        public void AddDataPointModel(CurrentUsersDataPointViewModel dataPointModel)
+        {
+            DataPointModels.Add(dataPointModel);
+        }
+
+        public void RemoveDataPointModel(CurrentUsersDataPointViewModel dataPointModel)
+        {
+            DataPointModels.Remove(dataPointModel);
+        }
+
+        public Task<string> GetTextForDataPoint(ICodeElementDescriptor codeElementDescriptor)
+        {
+            if(CodeElementDescriptorToDataPointString.ContainsKey(codeElementDescriptor))
+            {
+                return Task.FromResult(CodeElementDescriptorToDataPointString[codeElementDescriptor]);
+            }
+
+            var cmc = new CodeMetricCalculator();
+            var result = cmc.Calculate(codeElementDescriptor.SyntaxNode);
+
+            var metricMsg = $"LOC: {result.LineOfCode}, CC: {result.CyclomaticComplexity}, MI: {result.MaintainabilityIndex:###}";
+            CodeElementDescriptorToDataPointString.Add(codeElementDescriptor, metricMsg);
+            return Task.FromResult(metricMsg);
         }
 
         private void LayoutChangeProviderOnLayoutChanged(object sender, EventArgs eventArgs)
@@ -41,7 +66,7 @@ namespace TeamCoding.VisualStudio.CodeLens
                     var newText = $"LOC: {result.LineOfCode}, CC: {result.CyclomaticComplexity}, MI: {result.MaintainabilityIndex:###}";
 
                     if(dataPointModel.Descriptor != newText ||
-                        !dataPointModel.IsVisible && !string.IsNullOrEmpty(newText))
+                       !dataPointModel.IsVisible && !string.IsNullOrEmpty(newText))
                     {
                         shouldRefresh = true;
                     }
@@ -55,29 +80,6 @@ namespace TeamCoding.VisualStudio.CodeLens
             }
         }
 
-        public void AddDataPointModel(CurrentUsersDataPointViewModel dataPointModel)
-        {
-            DataPointModels.Add(dataPointModel);
-        }
-        public void RemoveDataPointModel(CurrentUsersDataPointViewModel dataPointModel)
-        {
-            DataPointModels.Remove(dataPointModel);
-        }
-
-        public Task<string> GetTextForDataPoint(ICodeElementDescriptor codeElementDescriptor)
-        {
-            if(CodeElementDescriptorToDataPointString.ContainsKey(codeElementDescriptor))
-            {
-                return Task.FromResult(CodeElementDescriptorToDataPointString[codeElementDescriptor]);
-            }
-
-            var cmc = new CodeMetricCalculator();
-            var result = cmc.Calculate(codeElementDescriptor.SyntaxNode);
-
-            var metricMsg = $"LOC: {result.LineOfCode}, CC: {result.CyclomaticComplexity}, MI: {result.MaintainabilityIndex:###}";
-            CodeElementDescriptorToDataPointString.Add(codeElementDescriptor, metricMsg);
-            return Task.FromResult(metricMsg);
-        }
         protected virtual void Dispose(bool disposing)
         {
             if(!disposedValue)
