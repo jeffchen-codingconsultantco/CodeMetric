@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.Composition;
+using CodeMetric.Core.Shared;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 
@@ -22,7 +18,13 @@ namespace CodeMetric.Extension
 
         public void TextViewCreated(IWpfTextView textView)
         {
-            textView.Properties.GetOrCreateSingletonProperty(() => new CodeMetric(textView));
+            ILayoutChangeProvider layoutChangeProvider = new LayoutChangeProvider();
+            CodeMetricTypeProvider.Add<ILayoutChangeProvider>(typeof(ILayoutChangeProvider), layoutChangeProvider);
+            textView.LayoutChanged += (sender, args) =>
+                                      {
+                                          layoutChangeProvider.OnLayoutChanged(sender, args);
+                                      };
+            textView.Properties.GetOrCreateSingletonProperty(() => layoutChangeProvider);
         }
     }
 }
