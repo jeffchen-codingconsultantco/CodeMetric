@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
+using CodeMetric.Core;
+using CodeMetric.Core.Halstead;
+using CodeMetric.Core.Shared;
 
 
 namespace TeamCoding.VisualStudio.CodeLens
@@ -12,7 +15,7 @@ namespace TeamCoding.VisualStudio.CodeLens
     public class CurrentUsersDataPointUpdater : IDisposable
     {
         // Can't use an import here since this is loaded dynamically it doesn't have access to the main project's MEF exports
-        //private readonly IRemoteModelPersister RemoteModelChangeManager = TeamCodingProjectTypeProvider.Get<ITeamCodingPackageProvider>().RemoteModelChangeManager;
+        private readonly ILayoutChangeProvider LayoutChangeProvider = CodeMetricTypeProvider.Get<ILayoutChangeProvider>();
         private readonly List<CurrentUsersDataPointViewModel> DataPointModels = new List<CurrentUsersDataPointViewModel>();
         
         private Dictionary<int[], string> CaretMemberHashCodeToDataPointString = new Dictionary<int[], string>();
@@ -22,7 +25,42 @@ namespace TeamCoding.VisualStudio.CodeLens
         public CurrentUsersDataPointUpdater(): base()
         {
             //RemoteModelChangeManager.RemoteModelReceived += RemoteModelChangeManager_RemoteModelReceived;
+            LayoutChangeProvider.LayoutChanged += LayoutChangeProviderOnLayoutChanged;
         }
+
+        private void LayoutChangeProviderOnLayoutChanged(object sender, EventArgs eventArgs)
+        {
+            foreach(var dataPointModel in DataPointModels)
+            {
+                var codeElementDescriptor = ((CurrentUsersDataPoint)dataPointModel.DataPoint).CodeElementDescriptor;
+                if(dataPointModel.IsDisposed)
+                {
+                    CodeElementDescriptorToDataPointString.Remove(codeElementDescriptor);
+                }
+                else
+                {
+                    bool shouldRefresh = false;
+                    //var newText = GetTextForDataPointInternal(codeElementDescriptor);
+
+                    var cmc = new CodeMetricCalculator();
+                    var result = cmc.Calculate(codeElementDescriptor.SyntaxNode);
+                    var newText = $"LOC: {result.LineOfCode}, CC: {result.CyclomaticComplexity}, MI: {result.MaintainabilityIndex:###}";
+
+                    if(dataPointModel.Descriptor != newText ||
+                        !dataPointModel.IsVisible && !string.IsNullOrEmpty(newText))
+                    {
+                        shouldRefresh = true;
+                    }
+
+                    if(shouldRefresh && dataPointModel.RefreshCommand.CanExecute(null))
+                    {
+                        CodeElementDescriptorToDataPointString[codeElementDescriptor] = newText;
+                        dataPointModel.RefreshCommand.Execute(null);
+                    }
+                }
+            }
+        }
+
         public void AddDataPointModel(CurrentUsersDataPointViewModel dataPointModel)
         {
             DataPointModels.Add(dataPointModel);
@@ -125,13 +163,25 @@ namespace TeamCoding.VisualStudio.CodeLens
             {
                 return Task.FromResult(CodeElementDescriptorToDataPointString[codeElementDescriptor]);
             }
-            else
-            {
-                //var result = GetTextForDataPointInternal(codeElementDescriptor);
-                var result = "Hello 1";
-                CodeElementDescriptorToDataPointString.Add(codeElementDescriptor, result);
-                return Task.FromResult(result);
-            }
+
+            var cmc = new CodeMetricCalculator();
+            var result = cmc.Calculate(codeElementDescriptor.SyntaxNode);
+
+            var metricMsg = $"LOC: {result.LineOfCode}, CC: {result.CyclomaticComplexity}, MI: {result.MaintainabilityIndex:###}";
+            CodeElementDescriptorToDataPointString.Add(codeElementDescriptor, metricMsg);
+
+            //foreach(var dataPointModel in DataPointModels)
+            //{
+            //    if((dataPointModel.Descriptor != metricMsg
+            //        || !dataPointModel.IsVisible && !string.IsNullOrEmpty(metricMsg))
+            //       && dataPointModel.RefreshCommand.CanExecute(null))
+            //    {
+            //        CodeElementDescriptorToDataPointString[codeElementDescriptor] = metricMsg;
+            //        dataPointModel.RefreshCommand.Execute(null);
+            //    }
+            //}
+
+            return Task.FromResult(metricMsg);
         }
         protected virtual void Dispose(bool disposing)
         {

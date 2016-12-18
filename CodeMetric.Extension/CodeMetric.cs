@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using CodeMetric.Core;
 using CodeMetric.Core.Halstead;
+using CodeMetric.Core.Shared;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -28,9 +29,16 @@ namespace CodeMetric.Extension
             _root = new CodeMetricBarControl();
 
             _adornmentLayer = view.GetAdornmentLayer("CodeMetric");
-            
-            _view.ViewportHeightChanged += OnViewSizeChanged;
-            _view.ViewportWidthChanged += OnViewSizeChanged;
+
+            //_view.ViewportHeightChanged += OnViewSizeChanged;
+            //_view.ViewportWidthChanged += OnViewSizeChanged;
+
+            ILayoutChangeProvider layoutChangeProvider = new LayoutChangeProvider();
+            CodeMetricTypeProvider.Add<ILayoutChangeProvider>(typeof(ILayoutChangeProvider), layoutChangeProvider);
+            _view.LayoutChanged += (sender, args) =>
+                                   {
+                                       layoutChangeProvider.OnLayoutChanged(sender, args);
+                                   };
         }
 
         private void OnViewSizeChanged(object sender, EventArgs eventArgs)
@@ -45,8 +53,6 @@ namespace CodeMetric.Extension
 
         public void UpdateMetric()
         {
-            var ran = new Random();
-            
             SnapshotPoint caretPosition = _view.Caret.Position.BufferPosition;
             Document doc = caretPosition.Snapshot.GetOpenDocumentInCurrentContextWithChanges();
             var ancestorsAndSelf = doc.GetSyntaxRootAsync().Result.FindToken(caretPosition).Parent.AncestorsAndSelf();
@@ -59,7 +65,7 @@ namespace CodeMetric.Extension
                 
                 Canvas.SetTop(_root, charBounds.Bottom);
                 Canvas.SetRight(_root, charBounds.Right + 100);
-
+                
                 //LineOfCode
                 var locCalculator = new LineOfCodeCalculator();
                 var loc = locCalculator.Calculate(targetNode);
@@ -75,6 +81,10 @@ namespace CodeMetric.Extension
                 var halsteadMetrics = halsteadAnalyzer.Calculate(targetNode);
                 var mi = MaintainabilityIndexCalculator.CalculateMaintainablityIndex(cyclomaticCounter, loc, halsteadMetrics);
                 _root.LblMaintainabilityIndex.Content = mi.ToString("###");
+
+                //Add into SyntaxNodeCache
+                var metricMsg = $"LOC: {loc}, CC: {cyclomaticCounter}, MI: {mi:###}";
+                SyntaxNodeCache.Change(targetNode, metricMsg);
             }
             else
             {

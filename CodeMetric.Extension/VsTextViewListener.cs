@@ -13,25 +13,25 @@ using Microsoft.VisualStudio.Utilities;
 
 namespace CodeMetric.Extension
 {
-    [Export(typeof(IVsTextViewCreationListener))]
-    [TextViewRole(PredefinedTextViewRoles.Editable)]
-    [ContentType("text")]
-    internal class VsTextViewListener : IVsTextViewCreationListener
-    {
-        [Import]
-        internal IVsEditorAdaptersFactoryService AdapterService = null;
+    //[Export(typeof(IVsTextViewCreationListener))]
+    //[TextViewRole(PredefinedTextViewRoles.Editable)]
+    //[ContentType("text")]
+    //internal class VsTextViewListener : IVsTextViewCreationListener
+    //{
+    //    [Import]
+    //    internal IVsEditorAdaptersFactoryService AdapterService = null;
         
 
-        public void VsTextViewCreated(IVsTextView textViewAdapter)
-        {
-            ITextView textView = AdapterService.GetWpfTextView(textViewAdapter);
-            if(textView == null)
-                return;
+    //    public void VsTextViewCreated(IVsTextView textViewAdapter)
+    //    {
+    //        ITextView textView = AdapterService.GetWpfTextView(textViewAdapter);
+    //        if(textView == null)
+    //            return;
 
-            CodeMetric adornment = textView.Properties.GetProperty<CodeMetric>(typeof(CodeMetric));
-            textView.Properties.GetOrCreateSingletonProperty(() => new TypeCharFilter(textViewAdapter, textView, adornment));
-        }
-    }
+    //        CodeMetric adornment = textView.Properties.GetProperty<CodeMetric>(typeof(CodeMetric));
+    //        //textView.Properties.GetOrCreateSingletonProperty(() => new TypeCharFilter(textViewAdapter, textView, adornment));
+    //    }
+    //}
 
 
     internal sealed class TypeCharFilter : IOleCommandTarget

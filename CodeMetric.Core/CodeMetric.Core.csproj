@@ -50,6 +50,8 @@
       <HintPath>..\packages\Microsoft.CodeAnalysis.Workspaces.Common.1.3.2\lib\net45\Microsoft.CodeAnalysis.Workspaces.Desktop.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.CodeSense.Roslyn, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.Internal, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
@@ -154,6 +156,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeMetricCalculator.cs" />
+    <Compile Include="CodeMetricResult.cs" />
     <Compile Include="CyclomaticComplexityCalculator.cs" />
     <Compile Include="Halstead\HalsteadAnalyzer.cs" />
     <Compile Include="Halstead\HalsteadMetrics.cs" />
@@ -163,7 +167,11 @@
     <Compile Include="Halstead\Operands.cs" />
     <Compile Include="Halstead\Operators.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\CodeMetricTypeProvider.cs" />
+    <Compile Include="Shared\ILayoutChangeProvider.cs" />
     <Compile Include="Shared\IntArrayEqualtyComparer.cs" />
+    <Compile Include="Shared\LayoutChangeProvider.cs" />
+    <Compile Include="Shared\SyntaxNodeCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
