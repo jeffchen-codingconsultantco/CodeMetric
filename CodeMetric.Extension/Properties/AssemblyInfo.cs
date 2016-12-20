@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CodeMetric.Extension")]
+[assembly: AssemblyTitle("CodeMetric")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CodeMetric.Extension")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCompany("Coding Consultant & Co.")]
+[assembly: AssemblyProduct("CodeMetric for Visual Studio")]
+[assembly: AssemblyCopyright("@Coding Consultant & Co. 2016 - 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualStudio.Alm.Roslyn.Client.Features.WorkspaceUpdateManager;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.VisualStudio.Alm.Roslyn.Client.Features.WorkspaceUpdateManager;
 using Microsoft.VisualStudio.CodeSense;
 using Microsoft.VisualStudio.CodeSense.Roslyn;
-using System;
-using System.Threading.Tasks;
 
-namespace TeamCoding.VisualStudio.CodeLens
+namespace CodeMetric.Extension.VisualStudio.CodeLens
 {
     public class CurrentUsersDataPoint : DataPoint<string>
     {

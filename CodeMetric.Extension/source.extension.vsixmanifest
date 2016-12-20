@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="CodeMetric.Extension.Jeff Chen.75c4b800-3659-4c19-9828-a66e8e73f420" Version="1.0" Language="en-US" Publisher="Jeff Chen" />
-    <DisplayName>CodeMetric.Extension</DisplayName>
-    <Description>Empty VSIX Project.</Description>
+    <Identity Id="CodeMetric.Jeff Chen.75c4b800-3659-4c19-9828-a66e8e73f420" Version="1.0" Language="en-US" Publisher="Jeff Chen" />
+    <DisplayName>CodeMetric for Visual Studio</DisplayName>
+    <Description xml:space="preserve">A Visual Studio extension calculate code metric by using Roslyn API and display the result in CodeLens.</Description>
+    <MoreInfo>http://www.codingconsultant.com.au</MoreInfo>
+    <Tags>Code, Collaboration, Teams, Code Review</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />

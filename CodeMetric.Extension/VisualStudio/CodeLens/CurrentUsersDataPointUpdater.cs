@@ -1,13 +1,12 @@
-﻿using Microsoft.VisualStudio.CodeSense.Roslyn;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using CodeMetric.Core;
 using CodeMetric.Core.Shared;
+using Microsoft.VisualStudio.CodeSense.Roslyn;
 
-
-namespace TeamCoding.VisualStudio.CodeLens
+namespace CodeMetric.Extension.VisualStudio.CodeLens
 {
     [Export(typeof(CurrentUsersDataPointUpdater))]
     public class CurrentUsersDataPointUpdater : IDisposable

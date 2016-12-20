@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualStudio.CodeSense.Editor;
+﻿using System.ComponentModel;
+using Microsoft.VisualStudio.CodeSense.Editor;
 using Microsoft.VisualStudio.Language.Intellisense;
-using System.ComponentModel;
 
-namespace TeamCoding.VisualStudio.CodeLens
+namespace CodeMetric.Extension.VisualStudio.CodeLens
 {
     public class CurrentUsersDataPointViewModel : GlyphDataPointViewModel
     {

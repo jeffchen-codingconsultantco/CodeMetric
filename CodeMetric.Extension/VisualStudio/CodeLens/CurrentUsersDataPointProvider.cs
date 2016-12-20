@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualStudio.Alm.Roslyn.Client.Features.WorkspaceUpdateManager;
+﻿using System.ComponentModel.Composition;
+using Microsoft.VisualStudio.Alm.Roslyn.Client.Features.WorkspaceUpdateManager;
 using Microsoft.VisualStudio.CodeSense.Roslyn;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Utilities;
-using System.ComponentModel.Composition;
 
-namespace TeamCoding.VisualStudio.CodeLens
+namespace CodeMetric.Extension.VisualStudio.CodeLens
 {
     [Export(typeof(ICodeLensDataPointProvider)), Name(CodeLensName)]
     public class CurrentUsersDataPointProvider : ICodeLensDataPointProvider
