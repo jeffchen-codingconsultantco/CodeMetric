@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.Alm.Roslyn.Client.Features.WorkspaceUpdateManager;
 using Microsoft.VisualStudio.CodeSense;
 using Microsoft.VisualStudio.CodeSense.Roslyn;
+using IWorkspaceUpdateManager = Microsoft.VisualStudio.Alm.Roslyn.Client.IVisualStudioIntegrationService;
+using WorkspaceChangesEventArgs = Microsoft.CodeAnalysis.WorkspaceChangeEventArgs;
 
-namespace CodeMetric.Extension.VisualStudio.CodeLens
+namespace CodeMetric.v15.VisualStudio.CodeLens
 {
     public class CurrentUsersDataPoint : DataPoint<string>
     {

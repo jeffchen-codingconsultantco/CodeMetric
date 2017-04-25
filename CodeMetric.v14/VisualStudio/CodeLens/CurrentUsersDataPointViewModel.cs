@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.CodeSense.Editor;
 using Microsoft.VisualStudio.Language.Intellisense;
 
-namespace CodeMetric.Extension.VisualStudio.CodeLens
+namespace CodeMetric.v14.VisualStudio.CodeLens
 {
     public class CurrentUsersDataPointViewModel : GlyphDataPointViewModel
     {

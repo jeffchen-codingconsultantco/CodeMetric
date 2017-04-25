@@ -6,7 +6,7 @@ using CodeMetric.Core;
 using CodeMetric.Core.Shared;
 using Microsoft.VisualStudio.CodeSense.Roslyn;
 
-namespace CodeMetric.Extension.VisualStudio.CodeLens
+namespace CodeMetric.v14.VisualStudio.CodeLens
 {
     [Export(typeof(CurrentUsersDataPointUpdater))]
     public class CurrentUsersDataPointUpdater : IDisposable

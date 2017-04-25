@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMetric.Extension", "CodeMetric.Extension\CodeMetric.Extension.csproj", "{8B921826-7833-412D-87BE-C75243392124}"
 EndProject
@@ -21,6 +21,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v14", "v14", "{FF38AB00-CE6
 		References\v14\Microsoft.VisualStudio.Text.Internal.dll = References\v14\Microsoft.VisualStudio.Text.Internal.dll
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v15", "v15", "{DBA2579F-10B8-47FD-8F95-5DBAFA533B89}"
+	ProjectSection(SolutionItems) = preProject
+		References\v15\Microsoft.Alm.Shared.dll = References\v15\Microsoft.Alm.Shared.dll
+		References\v15\Microsoft.TeamFoundation.CodeSense.Client.Common.dll = References\v15\Microsoft.TeamFoundation.CodeSense.Client.Common.dll
+		References\v15\Microsoft.VisualStudio.Alm.Shared.CodeAnalysisClient.dll = References\v15\Microsoft.VisualStudio.Alm.Shared.CodeAnalysisClient.dll
+		References\v15\Microsoft.VisualStudio.Alm.Shared.dll = References\v15\Microsoft.VisualStudio.Alm.Shared.dll
+		References\v15\Microsoft.VisualStudio.CodeSense.Client.Common.dll = References\v15\Microsoft.VisualStudio.CodeSense.Client.Common.dll
+		References\v15\Microsoft.VisualStudio.CodeSense.dll = References\v15\Microsoft.VisualStudio.CodeSense.dll
+		References\v15\Microsoft.VisualStudio.CodeSense.Roslyn.dll = References\v15\Microsoft.VisualStudio.CodeSense.Roslyn.dll
+		References\v15\Microsoft.VisualStudio.Text.Internal.dll = References\v15\Microsoft.VisualStudio.Text.Internal.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMetric.v15", "CodeMetric.v15\CodeMetric.v15.csproj", "{9E99AF0B-B160-4ED3-BF93-0272F11F9962}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMetric.v14", "CodeMetric.v14\CodeMetric.v14.csproj", "{21564406-242F-4D0D-BAE3-83C39182C991}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,11 +51,20 @@ Global
 		{488C2FBB-5527-4631-9125-C07021596D74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{488C2FBB-5527-4631-9125-C07021596D74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{488C2FBB-5527-4631-9125-C07021596D74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E99AF0B-B160-4ED3-BF93-0272F11F9962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E99AF0B-B160-4ED3-BF93-0272F11F9962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E99AF0B-B160-4ED3-BF93-0272F11F9962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E99AF0B-B160-4ED3-BF93-0272F11F9962}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21564406-242F-4D0D-BAE3-83C39182C991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21564406-242F-4D0D-BAE3-83C39182C991}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21564406-242F-4D0D-BAE3-83C39182C991}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21564406-242F-4D0D-BAE3-83C39182C991}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FF38AB00-CE6B-4159-B910-135251D1B2BD} = {0B341276-FF05-4A3D-B5A3-9232230D5224}
+		{DBA2579F-10B8-47FD-8F95-5DBAFA533B89} = {0B341276-FF05-4A3D-B5A3-9232230D5224}
 	EndGlobalSection
 EndGlobal
