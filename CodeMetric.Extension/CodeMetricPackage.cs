@@ -49,6 +49,8 @@ namespace CodeMetric.Extension
         /// </summary>
         public const string PackageGuidString = "0f5e27c1-805e-47fd-a064-8821b88118e3";
 
+        public static CodeMetricPackage Current { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CodeMetricPackage"/> class.
         /// </summary>
@@ -58,6 +60,19 @@ namespace CodeMetric.Extension
             // any Visual Studio service because at this point the package object is created but
             // not sited yet inside Visual Studio environment. The place to do all the other
             // initialization is the Initialize method.
+            Current = this;
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+        }
+
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            var assembly = new AssemblyName(args.Name);
+            if (assembly.Name.Contains("CodeMetric.v"))
+            {
+                return GetVersionedAssembly();
+            }
+
+            return null;
         }
 
         #region Package Members
