@@ -18,13 +18,11 @@ namespace CodeMetric.Extension
 
         public void TextViewCreated(IWpfTextView textView)
         {
-            ILayoutChangeProvider layoutChangeProvider = new LayoutChangeProvider();
-            CodeMetricTypeProvider.Add<ILayoutChangeProvider>(typeof(ILayoutChangeProvider), layoutChangeProvider);
             textView.LayoutChanged += (sender, args) =>
                                       {
-                                          layoutChangeProvider.OnLayoutChanged(sender, args);
+                                          CodeMetricPackage.Current.LayoutChangeProvider.OnLayoutChanged(sender, args);
                                       };
-            textView.Properties.GetOrCreateSingletonProperty(() => layoutChangeProvider);
+            textView.Properties.GetOrCreateSingletonProperty(() => CodeMetricPackage.Current.LayoutChangeProvider);
         }
     }
 }

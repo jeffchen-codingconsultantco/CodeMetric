@@ -17,6 +17,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
 using System.Reflection;
 using System.IO;
+using CodeMetric.Core.Shared;
 
 namespace CodeMetric.Extension
 {
@@ -48,6 +49,8 @@ namespace CodeMetric.Extension
         /// CodeMetricPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "0f5e27c1-805e-47fd-a064-8821b88118e3";
+
+        public ILayoutChangeProvider LayoutChangeProvider { get; private set; }
 
         public static CodeMetricPackage Current { get; private set; }
 
@@ -88,7 +91,8 @@ namespace CodeMetric.Extension
             //Load versioned CodeMetric.vXX dll
             var versionedAssembly = GetVersionedAssembly();
 
-
+            LayoutChangeProvider = new LayoutChangeProvider();
+            CodeMetricTypeProvider.Add<ILayoutChangeProvider>(typeof(ILayoutChangeProvider), CodeMetricPackage.Current.LayoutChangeProvider);
         }
 
         private Assembly GetVersionedAssembly()
